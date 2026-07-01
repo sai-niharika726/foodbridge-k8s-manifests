@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  DATABASE_URL: "postgresql://foodbridge:foodbridge@db-service:5432/foodbridge"
+

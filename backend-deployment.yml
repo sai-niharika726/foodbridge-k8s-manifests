@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend-c
+          image: bsainiharika/food-bridge:backend
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          ports:
+           - containerPort: 5000
+      initContainers:
+        - name: wait-for-db
+          image: busybox
+          command: ['sh','-c', 'until nc -z db-service 5432; do echo waiting for db; sleep 2; done']
