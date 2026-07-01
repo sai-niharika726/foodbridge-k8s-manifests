@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: foodbridge
   name: backend-deployment
   labels:
     app: backend
@@ -17,6 +18,11 @@ spec:
       containers:
         - name: backend-c
           image: bsainiharika/food-bridge:backend
+          envFrom:
+            - configMapRef:
+                 name: backend-config
+            - secretRef:
+                name: backend-secret 
           resources:
             requests:
               cpu: 250m
